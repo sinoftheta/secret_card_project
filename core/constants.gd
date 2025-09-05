@@ -31,12 +31,13 @@ enum CardID {
 	d2,d3,d4,d5,d6,d7,d8,d9,dt,dj,dq,dk,da,
 	
 	## special 2s
-	snake_eyes,
-	seeing_double,
+	snake_eyes, 
+	doppelganger, ## on play: clones the first played card (cannot clone itself) (hidden effect: doppelganger can clone doppelganger)
+	seeing_double, ## on play: the hand is scored twice
 	
 	## special 3s
 	the_crab,
-	three_blind_mice,
+	three_blind_mice, ## on play: draw three (additional) cards face down
 	
 	## special 4s
 	four_eyes,
@@ -46,11 +47,14 @@ enum CardID {
 	
 	## special 5s
 	high_five,
-	five_finger_discount,
+	five_finger_discount, ## in hand: gain money from cutting
 	
 	## special 6s
 	six_feet_under,
-	watch_my_six,
+	watch_my_six, ## on draw: blind pick a six from your deck
+	
+	## "blind pick" is gonna be the deck selection view but all cards are face down
+	## you can still sort by suit and rank like normal
 	
 	## special 7s
 	seven_deadly_sins,
@@ -76,11 +80,11 @@ enum CardID {
 	king_of_the_hill,
 	
 	## special aces
-	ace_in_the_hole,
-	ace_up_the_sleeve,
-	ace_from_space,
-	the_last_survivor,
-	flushed_away, ## an ace that counts as all suits
+	ace_in_the_hole, ## fear not, bill clinton is the democrats ace in the hole
+	ace_up_the_sleeve, ## on discard this card returns to your hand
+	ace_from_space, ## on draw, search your deck for any ace
+	the_last_survivor, ## on play, cuts all other played cards
+	flushed_away, ## an ace that counts as all suits (I could change this to any card)
 	
 	## multivalued cards
 	nine_to_five,
@@ -92,6 +96,7 @@ enum CardID {
 	
 	## OH MY GOD YOU CAN USE ALL THE TEXAS HOLDEM HOLE CARD NAMES
 }
+
 var card_data:Dictionary[CardID, CardData] = {
 	CardID.c2:CardData.new("2 of Clubs",     [2],  [Suit.club], "", ShopRarity.unavailable, null, Vector2i(0,0)),
 	CardID.c3:CardData.new("3 of Clubs",     [3],  [Suit.club], "", ShopRarity.unavailable, null, Vector2i(1,0)),

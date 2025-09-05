@@ -32,7 +32,7 @@ enum CardID {
 	
 	## special 2s
 	snake_eyes, 
-	doppelganger, ## on play: clones the first played card (cannot clone itself) (hidden effect: doppelganger can clone doppelganger)
+	doppelganger, ## on play: clones the first played card (cannot clone itself) (implementation note: doppelganger can clone doppelganger)
 	seeing_double, ## on play: the hand is scored twice
 	
 	## special 3s
@@ -80,7 +80,7 @@ enum CardID {
 	king_of_the_hill,
 	
 	## special aces
-	ace_in_the_hole, ## fear not, bill clinton is the democrats ace in the hole
+	ace_in_the_hole, ## on cut: grants an extra action ## fear not, bill clinton is the democrats ace in the hole
 	ace_up_the_sleeve, ## on discard this card returns to your hand
 	ace_from_space, ## on draw, search your deck for any ace
 	the_last_survivor, ## on play, cuts all other played cards

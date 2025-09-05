@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://1g1wgxllstqt"]
+
+[ext_resource type="Script" uid="uid://cob5bo280e4q4" path="res://card/card.gd" id="1_fjcud"]
+
+[node name="Card" type="Node2D"]
+script = ExtResource("1_fjcud")
+
+[node name="Render" type="Node2D" parent="."]
+unique_name_in_owner = true
+top_level = true
+
+[node name="Interaction" type="ColorRect" parent="Render"]
+unique_name_in_owner = true
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="DebugLabel" type="Label" parent="Render"]
+unique_name_in_owner = true
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 3.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "test"
+horizontal_alignment = 1
+
+[connection signal="gui_input" from="Render/Interaction" to="." method="_on_interaction_gui_input"]

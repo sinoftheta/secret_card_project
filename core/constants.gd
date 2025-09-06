@@ -11,10 +11,10 @@ enum Menu {
 }
 
 enum Suit {
+	club,
 	heart,
-	diamond,
 	spade,
-	club
+	diamond,
 }
 enum ShopRarity {
 	unavailable,
@@ -41,7 +41,7 @@ enum CardID {
 	
 	## special 4s
 	four_eyes,
-	four_seasons,
+	four_seasons, ## counts as all four suits, no effect, mostly for a tutorial card
 	four_horsemen,
 	four_on_the_floor,
 	
@@ -86,14 +86,19 @@ enum CardID {
 	the_last_survivor, ## on play, cuts all other played cards
 	flushed_away, ## an ace that counts as all suits (I could change this to any card)
 	
+	
+	
+	
 	## multivalued cards
 	nine_to_five,
 	seven_eleven, ## "convinience store"
 	straight_to_the_point, ## counts as all values, gives a bonus if used in a straight
 	one_step_back_two_steps_forward,
 	two_steps_forward_one_step_back,
-	dog, ## counts as a king or a 9
+	dog, ## counts as a king or a 9, no effect, mostly for tutorial
 	
+	fifty_two_card_pickup, ## on play: shuffle all cards in hand into deck, draw the same number of cards into your hand as you had, +1 action (negates the action of playing)
+	#twenty_six_keys, counts as a 2 and a six, idk what it does lol
 	## OH MY GOD YOU CAN USE ALL THE TEXAS HOLDEM HOLE CARD NAMES
 }
 

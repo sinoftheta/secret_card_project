@@ -3,7 +3,7 @@ extends RefCounted
 
 var title:String
 var suits :Array[Constants.Suit]
-var values:Array[int]
+var ranks:Array[int]
 var description:String
 var shop_rarity:Constants.ShopRarity
 var texture:Texture
@@ -17,7 +17,7 @@ var texture_coord:Vector2i
 func _init(
 	_title:String,
 	_suits :Array[Constants.Suit],
-	_values:Array[int],
+	_ranks:Array[int],
 	_description:String,
 	_shop_rarity:Constants.ShopRarity,
 	_texture:Texture,
@@ -25,7 +25,7 @@ func _init(
 ) -> void:
 	title       = _title
 	suits       = _suits
-	values      = _values
+	ranks      = _ranks
 	description = _description
 	shop_rarity = _shop_rarity
 	texture       = _texture

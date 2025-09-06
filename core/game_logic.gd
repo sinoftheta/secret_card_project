@@ -61,3 +61,10 @@ func _on_exit_round() -> void:
 	pass
 func _on_enter_round() -> void:
 	pass
+	
+	
+func search_for_pair(cards:Array[Card]) -> bool:
+	if cards.size() < 2: return false
+	
+	
+	return false

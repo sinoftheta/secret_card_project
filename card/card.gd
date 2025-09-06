@@ -4,6 +4,8 @@ extends Node2D
 
 const SELECT_THRESHOLD:int = 10 ## this will go in options
 const HAND_WIDTH:float = 400
+
+const MAX_ANGLE:float = deg_to_rad(17)
 #region Game Logic
 var id:Constants.CardID:
 	set(value):
@@ -35,7 +37,10 @@ func print_state() -> void:
 func _draw() -> void:
 	draw_circle(Vector2(0, 56), 5, (%Interaction as ColorRect).color)
 func _process(delta: float) -> void:
+	var p:float = (float(get_index()) + 0.5 - float(get_parent().get_child_count()) * 0.5) / float(get_parent().get_child_count())
+	
 	position.x = float(get_index()) / float(get_parent().get_child_count()) * HAND_WIDTH
+	var angle:float = p * MAX_ANGLE
 	
 	## NOTE: render.top_level == true
 	if dragged:
@@ -47,8 +52,11 @@ func _process(delta: float) -> void:
 			minf(delta * 16.0,1.0)
 		)
 		
+		#(%Render as Node2D).rotation = lerp
+		
 		## check if we need to re-arrange the card orders
 		var hovered_index:int = clampi(
+			## this is the INVERSE of position.x, defined earlier in _process()
 			int(get_parent().to_local(get_global_mouse_position()).x / HAND_WIDTH * float(get_parent().get_child_count()) + 0.5),
 			0,
 			get_parent().get_child_count() - 1
@@ -63,11 +71,17 @@ func _process(delta: float) -> void:
 			selected_offset = Vector2(0,-60) * global_scale.x
 		else:
 			selected_offset = Vector2(0,0)
+		var curve_offset:Vector2 = -p * p * Vector2(0,-60)
 		(%Render as Node2D).position = lerp(
 			(%Render as Node2D).position, 
-			global_position + selected_offset, 
+			global_position + selected_offset + curve_offset, 
 			minf(delta * 16.0,1.0)
 		)
+	(%Render as Node2D).rotation = lerp(
+		(%Render as Node2D).rotation,
+		angle,
+		minf(delta * 16.0,1.0)
+	)
 	
 var dragged:bool
 var drag_point:Vector2

@@ -31,80 +31,86 @@ enum CardID {
 	d2,d3,d4,d5,d6,d7,d8,d9,dt,dj,dq,dk,da,
 	
 	## special 2s
-	snake_eyes, 
-	doppelganger, ## on play: clones the first played card (cannot clone itself) (implementation note: doppelganger can clone doppelganger)
-	seeing_double, ## on play: the hand is scored twice
+	#snake_eyes, 
+	#doppelganger, ## on play: clones the first played card (cannot clone itself) (implementation note: doppelganger can clone doppelganger)
+	#seeing_double, ## on play: the hand is scored twice
 	
 	## special 3s
-	the_crab,
-	three_blind_mice, ## on play: draw three (additional) cards face down
+	#the_crab,
+	#three_blind_mice, ## on play: draw three (additional) cards face down
 	
 	## special 4s
-	four_eyes,
-	four_seasons, ## counts as all four suits, no effect, mostly for a tutorial card
-	four_horsemen,
-	four_on_the_floor,
+	#four_eyes,
+	#four_seasons, ## counts as all four suits, no effect, mostly for a tutorial card
+	#four_horsemen,
+	#four_on_the_floor,
 	
 	## special 5s
-	high_five,
-	five_finger_discount, ## in hand: gain money from cutting
+	#high_five,
+	#five_finger_discount, ## in hand: gain money from cutting
 	
 	## special 6s
-	six_feet_under,
-	watch_my_six, ## on draw: blind pick a six from your deck
+	#six_feet_under,
+	#watch_my_six, ## on draw: blind pick a six from your deck
 	
 	## "blind pick" is gonna be the deck selection view but all cards are face down
 	## you can still sort by suit and rank like normal
 	
 	## special 7s
-	seven_deadly_sins,
-	lucky_sevens,
+	#seven_deadly_sins,
+	#lucky_sevens,
 	
 	## special 8s
-	arachnid,
-	hateful_eight,
+	#arachnid,
+	#hateful_eight,
 	#quads 
 	
 	## special 9s
-	nine_lives,
+	#nine_lives,
 	
 	## special 10s
-	hangin_ten,
+	#hangin_ten,
 	
 	## special jacks
-	jack_of_all_trades,
+	#jack_of_all_trades,
 	
 	## special queens
-	killer_queen,
+	#killer_queen,
 	
 	## special kings
-	king_of_the_hill,
+	#king_of_the_hill,
 	
 	## special aces
-	ace_in_the_hole, ## on cut: grants an extra action ## fear not, bill clinton is the democrats ace in the hole
-	ace_up_the_sleeve, ## on discard this card returns to your hand
-	ace_from_space, ## on draw, search your deck for any ace
-	the_last_survivor, ## on play, cuts all other played cards
-	flushed_away, ## an ace that counts as all suits (I could change this to any card)
+	#ace_in_the_hole, ## on cut: grants an extra action ## fear not, bill clinton is the democrats ace in the hole
+	#ace_up_the_sleeve, ## on discard this card returns to your hand
+	#ace_from_space, ## on draw, search your deck for any ace
+	#the_last_survivor, ## on play, cuts all other played cards
+	#flushed_away, ## an ace that counts as all suits (I could change this to any card)
 	
 	
 	
 	
 	## multivalued cards
-	nine_to_five,
-	seven_eleven, ## "convinience store"
-	straight_to_the_point, ## counts as all values, gives a bonus if used in a straight
-	one_step_back_two_steps_forward,
-	two_steps_forward_one_step_back,
+	nine_to_five, ## counts as a 9 and a 5
+	major_chord, ## counts as a 1,3, and 5
 	dog, ## counts as a king or a 9, no effect, mostly for tutorial
+	
+	#seven_eleven, ## "convinience store"
+	#straight_to_the_point, ## counts as all values, gives a bonus if used in a straight
+	#one_step_back_two_steps_forward,
+	#two_steps_forward_one_step_back,
+	
 	## eight six, the initial D car, idk what the effect will be
 	
-	fifty_two_card_pickup, ## on play: shuffle all cards in hand into deck, draw the same number of cards into your hand as you had, +1 action (negates the action of playing)
+	
+	
+	#fifty_two_card_pickup, ## on play: shuffle all cards in hand into deck, draw the same number of cards into your hand as you had, +1 action (negates the action of playing)
 	#twenty_six_keys, counts as a 2 and a six, idk what it does lol
 	## OH MY GOD YOU CAN USE ALL THE TEXAS HOLDEM HOLE CARD NAMES
 }
 
 var base_cards_tex:Texture2D = preload("res://texture/base_cards.png")
+var special_cards_tex:Texture2D = preload("res://texture/special_cards.png")
 var card_data:Dictionary[CardID, CardData] = {
 	CardID.c2:CardData.new("2 of Clubs",     [2],  [Suit.club], "", ShopRarity.unavailable, base_cards_tex, Vector2i(0,0)),
 	CardID.c3:CardData.new("3 of Clubs",     [3],  [Suit.club], "", ShopRarity.unavailable, base_cards_tex, Vector2i(1,0)),
@@ -161,4 +167,8 @@ var card_data:Dictionary[CardID, CardData] = {
 	CardID.dq:CardData.new("Queen of Diamonds", [12], [Suit.diamond], "", ShopRarity.unavailable, base_cards_tex, Vector2i(10,3)),
 	CardID.dk:CardData.new("King of Diamonds",  [13], [Suit.diamond], "", ShopRarity.unavailable, base_cards_tex, Vector2i(11,3)),
 	CardID.da:CardData.new("Ace of Diamonds",   [14], [Suit.diamond], "", ShopRarity.unavailable, base_cards_tex, Vector2i(12,3)),
+	
+	CardID.dog: CardData.new("Man's Best Friend",     [13,9],  [Suit.heart], "", ShopRarity.unavailable, special_cards_tex, Vector2i(0,0)),
+	CardID.nine_to_five: CardData.new("9:00 to 5:00", [9,5],   [Suit.spade], "", ShopRarity.unavailable, special_cards_tex, Vector2i(1,0)),
+	CardID.major_chord:  CardData.new("Major Chord",  [5,3,1], [Suit.club],  "", ShopRarity.unavailable, special_cards_tex, Vector2i(2,0)),
 }

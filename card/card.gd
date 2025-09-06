@@ -23,8 +23,6 @@ func _ready() -> void:
 	
 	selected = false
 
-
-	
 	
 ## card specific state also goes here
 var data:CardData:
@@ -39,14 +37,13 @@ func _draw() -> void:
 func _process(delta: float) -> void:
 	position.x = float(get_index()) / float(get_parent().get_child_count()) * HAND_WIDTH
 	
-	## render.top_level == true
+	## NOTE: render.top_level == true
 	if dragged:
 		(%Render as Node2D).z_index = get_parent().get_child_count()
 		## lerp render to mouse
-		print( )
 		(%Render as Node2D).position = lerp(
 			(%Render as Node2D).position, 
-			get_global_mouse_position() - drag_point + %Interaction.size * 0.5, 
+			get_global_mouse_position() + (%Interaction.size * 0.5 - drag_point) * global_scale.x,
 			minf(delta * 16.0,1.0)
 		)
 		
@@ -63,7 +60,7 @@ func _process(delta: float) -> void:
 		(%Render as Node2D).z_index = get_index()
 		var selected_offset:Vector2
 		if selected:
-			selected_offset = Vector2(0,-60)
+			selected_offset = Vector2(0,-60) * global_scale.x
 		else:
 			selected_offset = Vector2(0,0)
 		(%Render as Node2D).position = lerp(
@@ -105,5 +102,5 @@ func _on_tree_entered() -> void:
 	(%Sprite as Sprite2D).texture = data.texture
 	(%Sprite as Sprite2D).frame_coords = data.texture_coord
 	
-	## hrmmm
-	(%Render as Node2D).scale = get_parent().scale
+	## NOTE: render.top_level == true
+	(%Render as Node2D).scale = global_scale

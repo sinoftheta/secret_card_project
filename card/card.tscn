@@ -9,15 +9,22 @@ script = ExtResource("1_fjcud")
 unique_name_in_owner = true
 top_level = true
 
+[node name="Sprite" type="Sprite2D" parent="Render"]
+unique_name_in_owner = true
+hframes = 13
+vframes = 4
+
 [node name="Interaction" type="ColorRect" parent="Render"]
 unique_name_in_owner = true
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -40.0
+offset_top = -56.0
+offset_right = 40.0
+offset_bottom = 56.0
+color = Color(1, 1, 1, 0)
 
 [node name="DebugLabel" type="Label" parent="Render"]
 unique_name_in_owner = true
+visible = false
 offset_left = -20.0
 offset_top = -20.0
 offset_right = 20.0
@@ -26,4 +33,5 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "test"
 horizontal_alignment = 1
 
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
 [connection signal="gui_input" from="Render/Interaction" to="." method="_on_interaction_gui_input"]

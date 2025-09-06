@@ -3,21 +3,23 @@ extends Node2D
 
 
 const SELECT_THRESHOLD:int = 10 ## this will go in options
-const HAND_WIDTH:float = 200
+const HAND_WIDTH:float = 400
 #region Game Logic
 var id:Constants.CardID:
 	set(value):
 		id = value
-		#%DebugLabel.text = Constants.CardId.keys()[value]
+		if is_node_ready():
+			(%Sprite as Sprite2D).texture = data.texture
+			(%Sprite as Sprite2D).frame_coords = data.texture_coord
 ## other card state goes here
 var disabled:bool
 var selected:bool
 
 func _ready() -> void:
 	
-	var w:Array[float] = [1.0,0.75,0.5,0.25,0.0]
-	w.shuffle()
-	(%Interaction as ColorRect).color = Color(w[0],w[1],w[2])
+	#var w:Array[float] = [1.0,0.75,0.5,0.25,0.0]
+	#w.shuffle()
+	#(%Interaction as ColorRect).color = Color(w[0],w[1],w[2])
 	
 	selected = false
 
@@ -33,7 +35,7 @@ func print_state() -> void:
 #endregion
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, 5, (%Interaction as ColorRect).color)
+	draw_circle(Vector2(0, 56), 5, (%Interaction as ColorRect).color)
 func _process(delta: float) -> void:
 	position.x = float(get_index()) / float(get_parent().get_child_count()) * HAND_WIDTH
 	
@@ -41,6 +43,7 @@ func _process(delta: float) -> void:
 	if dragged:
 		(%Render as Node2D).z_index = get_parent().get_child_count()
 		## lerp render to mouse
+		print( )
 		(%Render as Node2D).position = lerp(
 			(%Render as Node2D).position, 
 			get_global_mouse_position() - drag_point + %Interaction.size * 0.5, 
@@ -62,7 +65,7 @@ func _process(delta: float) -> void:
 		if selected:
 			selected_offset = Vector2(0,-60)
 		else:
-			selected_offset = Vector2(0,-40)
+			selected_offset = Vector2(0,0)
 		(%Render as Node2D).position = lerp(
 			(%Render as Node2D).position, 
 			global_position + selected_offset, 
@@ -96,3 +99,11 @@ func _on_interaction_gui_input(event: InputEvent) -> void:
 					if card.selected: total_selected += 1
 				if total_selected < 5:
 					selected = true
+
+
+func _on_tree_entered() -> void:
+	(%Sprite as Sprite2D).texture = data.texture
+	(%Sprite as Sprite2D).frame_coords = data.texture_coord
+	
+	## hrmmm
+	(%Render as Node2D).scale = get_parent().scale

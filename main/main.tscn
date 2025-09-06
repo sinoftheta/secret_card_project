@@ -9,6 +9,7 @@ metadata/_edit_lock_ = true
 
 [node name="Hand" type="Node2D" parent="."]
 unique_name_in_owner = true
+visible = false
 scale = Vector2(0.75, 0.75)
 metadata/_edit_group_ = true
 

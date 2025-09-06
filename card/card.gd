@@ -29,9 +29,17 @@ func _ready() -> void:
 ## card specific state also goes here
 var data:CardData:
 	get(): return Constants.card_data[id]
+var ranks:Array[int]:
+	get(): return data.ranks
+var suits:Array[Constants.Suit]:
+	get(): return data.suits
 
-func print_state() -> void:
-	print("id: ", Constants.CardID.keys()[id], "\ntitle: ", data.title)
+func _to_string() -> String:
+	return "id: " + Constants.CardID.keys()[id] +\
+		   #"\ntitle: " + data.title
+		"\nranks: " + str(ranks) +\
+		" suits: " + str(suits) #+\
+		
 #endregion
 
 func _draw() -> void:

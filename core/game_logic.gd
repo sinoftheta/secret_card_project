@@ -32,8 +32,13 @@ func setup_game() -> void:
 	
 	deck.shuffle()
 	
-	for card:Card in deck:
-		card.print_state()
+	#for card:Card in deck:
+	#	card.print_state()
+	
+	for i:int in range(0,5):
+		hand.push_back(deck.pop_back())
+
+	find_hand_type(hand)
 
 var tween:Tween
 var animation_tick:int = 0
@@ -63,8 +68,32 @@ func _on_enter_round() -> void:
 	pass
 	
 	
-func search_for_pair(cards:Array[Card]) -> bool:
-	if cards.size() < 2: return false
+func find_hand_type(cards:Array[Card]) -> void:
+	
+	## categorize cards by rank and suit
+	var cards_with_rank:Dictionary[int, Array] = { ## pretend the type is Dictionary[int, Array[Card]]
+		2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[],12:[],13:[],14:[],
+	}
+	var cards_with_suit:Dictionary[Constants.Suit, Array] = { ## pretend the type is Dictionary[int, Array[Card]]
+		Constants.Suit.club:[],Constants.Suit.heart:[],
+		Constants.Suit.spade:[],Constants.Suit.diamond:[],
+	}
+	
+	for card:Card in cards:
+		print(card)
+		for rank:int in card.ranks:
+			cards_with_rank[rank].push_back(card)
+		for suit:Constants.Suit in card.suits:
+			cards_with_suit[suit].push_back(card)
+			
+	## check for each hand type
+	
+	## five of a kind/flush five
+	var ranks_with_5_cards:Array[int]
+	for rank:int in cards_with_rank.keys():
+		print(rank)
+		if cards_with_rank[rank].size() == 5:
+			ranks_with_5_cards.push_back(rank)
 	
 	
-	return false
+	return

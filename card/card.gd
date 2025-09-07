@@ -35,16 +35,18 @@ var suits:Array[Constants.Suit]:
 	get(): return data.suits
 
 func _to_string() -> String:
+	var suits_str:Array = suits.map(func(suit:Constants.Suit) ->String: return Constants.Suit.keys()[suit])
 	return "id: " + Constants.CardID.keys()[id] +\
 		   #"\ntitle: " + data.title
 		"\nranks: " + str(ranks) +\
-		" suits: " + str(suits) #+\
+		" suits: " + str(suits_str) #+\
 		
 #endregion
 
-func _draw() -> void:
-	draw_circle(Vector2(0, 56), 5, (%Interaction as ColorRect).color)
+#func _draw() -> void:
+#	draw_circle(Vector2(0, 56), 5, (%Interaction as ColorRect).color)
 func _process(delta: float) -> void:
+	if not is_node_ready(): return
 	var p:float = (float(get_index()) + 0.5 - float(get_parent().get_child_count()) * 0.5) / float(get_parent().get_child_count())
 	
 	position.x = float(get_index()) / float(get_parent().get_child_count()) * HAND_WIDTH

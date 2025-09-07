@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgvn6njrksix4"]
+[gd_scene load_steps=2 format=3 uid="uid://dgvn6njrksix4"]
 
 [ext_resource type="Script" uid="uid://c4y6xeqeq2tlg" path="res://main/main.gd" id="1_53q0u"]
-[ext_resource type="PackedScene" uid="uid://1g1wgxllstqt" path="res://card/card.tscn" id="2_pjrb6"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_53q0u")
@@ -9,21 +8,8 @@ metadata/_edit_lock_ = true
 
 [node name="Hand" type="Node2D" parent="."]
 unique_name_in_owner = true
-visible = false
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.95, 0.95)
 metadata/_edit_group_ = true
-
-[node name="Card" parent="Hand" instance=ExtResource("2_pjrb6")]
-
-[node name="Card2" parent="Hand" instance=ExtResource("2_pjrb6")]
-
-[node name="Card3" parent="Hand" instance=ExtResource("2_pjrb6")]
-
-[node name="Card4" parent="Hand" instance=ExtResource("2_pjrb6")]
-
-[node name="Card5" parent="Hand" instance=ExtResource("2_pjrb6")]
-
-[node name="Card6" parent="Hand" instance=ExtResource("2_pjrb6")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 metadata/_edit_lock_ = true

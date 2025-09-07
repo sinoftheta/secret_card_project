@@ -24,8 +24,33 @@ func _init(
 	_texture_coord:Vector2i,
 ) -> void:
 	title       = _title
+	
+	## normalize rank data
 	ranks      = _ranks
+	assert(ranks.size() > 0)
+	ranks.sort()
+	var rank_counts:Dictionary[int,int] = {}
+	for rank:int in ranks:
+		if not rank_counts.has(rank):
+			rank_counts[rank] = 1
+		else:
+			rank_counts[rank] = rank_counts[rank] + 1
+	for count:int in rank_counts.values():
+		assert(count == 1)
+	
+	## normalize suit data
 	suits       = _suits
+	assert(suits.size() > 0)
+	suits.sort()
+	var suit_counts:Dictionary[int,int] = {}
+	for suit:int in suits:
+		if not suit_counts.has(suit):
+			suit_counts[suit] = 1
+		else:
+			suit_counts[suit] = suit_counts[suit] + 1
+	for count:int in suit_counts.values():
+		assert(count == 1)
+
 	description = _description
 	shop_rarity = _shop_rarity
 	texture       = _texture

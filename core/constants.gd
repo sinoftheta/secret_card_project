@@ -94,6 +94,9 @@ enum CardID {
 	nine_to_five, ## counts as a 9 and a 5
 	major_chord, ## counts as a 1,3, and 5
 	dog, ## counts as a king or a 9, no effect, mostly for tutorial
+	a4, ## a4 paper
+	k4, ## 4K television
+	#forty_niner,
 	
 	#seven_eleven, ## "convinience store"
 	#straight_to_the_point, ## counts as all values, gives a bonus if used in a straight
@@ -169,6 +172,8 @@ var card_data:Dictionary[CardID, CardData] = {
 	CardID.da:CardData.new("Ace of Diamonds",   [14], [Suit.diamond], "", ShopRarity.unavailable, base_cards_tex, Vector2i(12,3)),
 	
 	CardID.dog: CardData.new("Man's Best Friend",     [13,9],  [Suit.heart], "", ShopRarity.unavailable, special_cards_tex, Vector2i(0,0)),
-	CardID.nine_to_five: CardData.new("9:00 to 5:00", [9,5],   [Suit.spade], "", ShopRarity.unavailable, special_cards_tex, Vector2i(1,0)),
-	CardID.major_chord:  CardData.new("Major Chord",  [5,3,1], [Suit.club],  "", ShopRarity.unavailable, special_cards_tex, Vector2i(2,0)),
+	CardID.nine_to_five: CardData.new("Workday",      [9,5],   [Suit.spade], "", ShopRarity.unavailable, special_cards_tex, Vector2i(1,0)),
+	CardID.major_chord:  CardData.new("Major Chord",  [5,3,1], [Suit.club],   "", ShopRarity.unavailable, special_cards_tex, Vector2i(2,0)),
+	CardID.a4:           CardData.new("Paper",        [14,4],  [Suit.diamond], "", ShopRarity.unavailable, special_cards_tex, Vector2i(3,0)),
+	CardID.k4:           CardData.new("Flatscreen",   [13,4],  [Suit.diamond], "", ShopRarity.unavailable, special_cards_tex, Vector2i(4,0)),
 }

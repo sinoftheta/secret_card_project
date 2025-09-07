@@ -27,16 +27,30 @@ func setup_game() -> void:
 	actions = 4
 	round = 0
 	
-	for i:int in range(15,23): #range(0,51):
-		## Don't use Card.new() its a scene not a bare class
+	#for i:int in range(15,23): #range(0,51):
+		### Don't use Card.new() its a scene not a bare class
+		#var card:Card = card_tscn.instantiate()
+		#card.id = i
+		#deck.push_back(card)
+	#
+	#deck.shuffle()
+	
+	var test_ids:Array[Constants.CardID] = [
+		Constants.CardID.c2,
+		Constants.CardID.c3,
+		Constants.CardID.dog,
+		Constants.CardID.nine_to_five,
+		Constants.CardID.a4,
+		Constants.CardID.k4,
+		Constants.CardID.c4,
+		Constants.CardID.c5,
+		Constants.CardID.c6
+	]
+	test_ids.shuffle()
+	for id:Constants.CardID in test_ids:
 		var card:Card = card_tscn.instantiate()
-		card.id = i
-		deck.push_back(card)
-	
-	deck.shuffle()
-	
-	for i:int in range(0,5):
-		hand.push_back(deck.pop_back())
+		card.id = id
+		hand.push_back(card)
 
 	find_hand_type(hand)
 
@@ -83,7 +97,7 @@ func find_hand_type(cards:Array[Card]) -> void:
 	## there are only 24 (4!) "flavors" of flushes, could be a cool mechanic to play with? idk
 	
 	for card:Card in cards:
-		print(card)
+		#print(card)
 		for rank:int in card.ranks:
 			cards_with_rank[rank].push_back(card)
 		for suit:Constants.Suit in card.suits:
@@ -102,22 +116,22 @@ func find_hand_type(cards:Array[Card]) -> void:
 			print("hand contains a ", Constants.Suit.keys()[suit]," flush!")
 			flush_count += 1
 	
-	
-	## straight
-	## keep in mind straights NEED 5 cards to exist
-	var run_value:int
-	for card:Card in cards:
-		for rank:int in card.ranks:
-			run_value = rank
-			
-		pass
-	
-	
+	if cards.size() == 5:
+		## straight
+		## check for the existance of each straight
+		## we don't have the luxury of sorting the cards before checking for the straight
+		## if a straight exists, there must be an ordering of cards that makes that straight
+		## we check all 5! orderings
+		for ordered_straight_ranks:Array in Util.five_straights:
+			for perm:Array in Util.perms5:
+				for i:int in range(5):
+					if not cards[perm[i]].ranks.has(ordered_straight_ranks[i]):
+						break
+					if i == 4:
+						print("straight found!")
+
 	## five of a kind
 	var ranks_with_5_cards:Array[int]
 	for rank:int in cards_with_rank.keys():
 		if cards_with_rank[rank].size() == 5:
 			ranks_with_5_cards.push_back(rank)
-	
-	
-	return

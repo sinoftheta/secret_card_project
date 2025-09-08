@@ -14,3 +14,5 @@ metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 metadata/_edit_lock_ = true
+
+[node name="DebugUI" type="CanvasLayer" parent="."]

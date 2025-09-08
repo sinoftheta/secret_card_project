@@ -171,7 +171,7 @@ var card_data:Dictionary[CardID, CardData] = {
 	CardID.dk:CardData.new("King of Diamonds",  [13], [Suit.diamond], "", ShopRarity.unavailable, base_cards_tex, Vector2i(11,3)),
 	CardID.da:CardData.new("Ace of Diamonds",   [14], [Suit.diamond], "", ShopRarity.unavailable, base_cards_tex, Vector2i(12,3)),
 	
-	CardID.dog: CardData.new("Man's Best Friend",     [13,9],  [Suit.heart], "", ShopRarity.unavailable, special_cards_tex, Vector2i(0,0)),
+	CardID.dog:          CardData.new("Canine",       [13,9],  [Suit.heart], "", ShopRarity.unavailable, special_cards_tex, Vector2i(0,0)),
 	CardID.nine_to_five: CardData.new("Workday",      [9,5],   [Suit.spade], "", ShopRarity.unavailable, special_cards_tex, Vector2i(1,0)),
 	CardID.major_chord:  CardData.new("Major Chord",  [5,3,1], [Suit.club],   "", ShopRarity.unavailable, special_cards_tex, Vector2i(2,0)),
 	CardID.a4:           CardData.new("Paper",        [14,4],  [Suit.diamond], "", ShopRarity.unavailable, special_cards_tex, Vector2i(3,0)),

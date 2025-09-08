@@ -1,0 +1,168 @@
+[gd_scene load_steps=2 format=3 uid="uid://6pc3sxxs7pg8"]
+
+[ext_resource type="Script" uid="uid://dogj472idjua3" path="res://debug/debug.gd" id="1_ikwhb"]
+
+[node name="Debug" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ikwhb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Filters" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="RankFilterStuff" type="ColorRect" parent="VBoxContainer/Filters"]
+custom_minimum_size = Vector2(169, 135)
+layout_mode = 2
+color = Color(0.388235, 0.415686, 0.309804, 1)
+
+[node name="RankFilters" type="GridContainer" parent="VBoxContainer/Filters/RankFilterStuff"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 111.0
+offset_bottom = 101.0
+columns = 4
+
+[node name="2" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "2"
+
+[node name="3" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "3"
+
+[node name="4" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "4"
+
+[node name="5" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "5"
+
+[node name="6" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "6"
+
+[node name="7" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "7"
+
+[node name="8" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "8"
+
+[node name="9" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "9"
+
+[node name="10" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "T"
+
+[node name="Jack" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "J"
+
+[node name="Queen" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "Q"
+
+[node name="King" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "K"
+
+[node name="Ace" type="CheckBox" parent="VBoxContainer/Filters/RankFilterStuff/RankFilters"]
+layout_mode = 2
+text = "A"
+
+[node name="ClearRankFilters" type="Button" parent="VBoxContainer/Filters/RankFilterStuff"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -129.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Clear"
+
+[node name="SuitFilterStuff" type="ColorRect" parent="VBoxContainer/Filters"]
+custom_minimum_size = Vector2(85, 101)
+layout_mode = 2
+color = Color(0.309804, 0.415686, 0.388235, 1)
+
+[node name="SuitFilters" type="GridContainer" parent="VBoxContainer/Filters/SuitFilterStuff"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 45.0
+offset_bottom = 66.0
+columns = 2
+
+[node name="Clubs" type="CheckBox" parent="VBoxContainer/Filters/SuitFilterStuff/SuitFilters"]
+layout_mode = 2
+text = "C"
+
+[node name="Hearts" type="CheckBox" parent="VBoxContainer/Filters/SuitFilterStuff/SuitFilters"]
+layout_mode = 2
+text = "H"
+
+[node name="Spades" type="CheckBox" parent="VBoxContainer/Filters/SuitFilterStuff/SuitFilters"]
+layout_mode = 2
+text = "S"
+
+[node name="Diamonds" type="CheckBox" parent="VBoxContainer/Filters/SuitFilterStuff/SuitFilters"]
+layout_mode = 2
+text = "D"
+
+[node name="ClearSuitFilters" type="Button" parent="VBoxContainer/Filters/SuitFilterStuff"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -65.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Clear"
+
+[node name="AddToDeck" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "add to deck"
+
+[node name="AddToHand" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "add to hand"
+
+[node name="SpawnCard" type="OptionButton" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 1
+popup/item_0/id = 0
+
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/2" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/3" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/4" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/5" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/6" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/7" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/8" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/9" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/10" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/Jack" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/Queen" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/King" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/Ace" to="." method="_on_filter_option_toggled"]
+[connection signal="pressed" from="VBoxContainer/Filters/RankFilterStuff/ClearRankFilters" to="." method="_on_clear_rank_filters_pressed"]
+[connection signal="toggled" from="VBoxContainer/Filters/SuitFilterStuff/SuitFilters/Clubs" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/SuitFilterStuff/SuitFilters/Hearts" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/SuitFilterStuff/SuitFilters/Spades" to="." method="_on_filter_option_toggled"]
+[connection signal="toggled" from="VBoxContainer/Filters/SuitFilterStuff/SuitFilters/Diamonds" to="." method="_on_filter_option_toggled"]
+[connection signal="pressed" from="VBoxContainer/Filters/SuitFilterStuff/ClearSuitFilters" to="." method="_on_clear_suit_filters_pressed"]
+[connection signal="pressed" from="VBoxContainer/AddToDeck" to="." method="_on_add_to_deck_pressed"]
+[connection signal="pressed" from="VBoxContainer/AddToHand" to="." method="_on_add_to_hand_pressed"]

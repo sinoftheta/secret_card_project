@@ -117,7 +117,7 @@ func find_hand_type(cards:Array[Card]) -> void:
 			flush_count += 1
 	
 	if cards.size() == 5:
-		## straight
+		## check for a "true" straight
 		## check for the existance of each straight
 		## we don't have the luxury of sorting the cards before checking for the straight
 		## if a straight exists, there must be an ordering of cards that makes that straight
@@ -129,6 +129,29 @@ func find_hand_type(cards:Array[Card]) -> void:
 						break
 					if i == 4:
 						print("straight found!")
+	
+	
+	## check for "weak" straights
+	## only pick the single longest straight
+	## ignore aces at first
+	var longest_run:int = 0
+	var high_rank_in_longest_run:int = 0
+	var curent_run:int = 0
+	
+	for rank:int in range(2,14):
+		if cards_with_rank[rank].size() > 0:
+			curent_run += 1
+		else:
+			curent_run = 0
+		
+		if curent_run >= longest_run:
+			longest_run = curent_run
+			high_rank_in_longest_run = rank
+			
+	## analyze aces low/high
+	
+	
+	
 
 	## five of a kind
 	var ranks_with_5_cards:Array[int]

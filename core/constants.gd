@@ -173,7 +173,7 @@ var card_data:Dictionary[CardID, CardData] = {
 	
 	CardID.dog:          CardData.new("Canine",       [13,9],  [Suit.heart], "", ShopRarity.unavailable, special_cards_tex, Vector2i(0,0)),
 	CardID.nine_to_five: CardData.new("Workday",      [9,5],   [Suit.spade], "", ShopRarity.unavailable, special_cards_tex, Vector2i(1,0)),
-	CardID.major_chord:  CardData.new("Major Chord",  [5,3,1], [Suit.club],   "", ShopRarity.unavailable, special_cards_tex, Vector2i(2,0)),
+	CardID.major_chord:  CardData.new("Major Chord",  [14, 3, 5], [Suit.club],   "", ShopRarity.unavailable, special_cards_tex, Vector2i(2,0)),
 	CardID.a4:           CardData.new("Paper",        [14,4],  [Suit.diamond], "", ShopRarity.unavailable, special_cards_tex, Vector2i(3,0)),
 	CardID.k4:           CardData.new("Flatscreen",   [13,4],  [Suit.diamond], "", ShopRarity.unavailable, special_cards_tex, Vector2i(4,0)),
 }

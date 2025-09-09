@@ -13,7 +13,11 @@ var trash:Array[Card]
 var hand_node:Node2D
 var selected_in_hand:Array[Card]:
 	get():
-		return []
+		var s:Array[Card] = []
+		for card:Card in hand_node.get_children():
+			if card.selected:
+				s.push_back(card)
+		return s
 
 var actions:int
 var round:int
@@ -28,9 +32,13 @@ func _ready() -> void:
 	SignalBus.debug_spawn_in_deck.connect(_on_debug_spawn_in_deck)
 	SignalBus.debug_spawn_in_hand.connect(_on_debug_spawn_in_hand)
 func _on_play_pressed() -> void:
-	pass
+	print("playing")
+	find_hand_type(selected_in_hand)
 func _on_cut_pressed() -> void:
-	pass
+	print("cutting")
+	for card:Card in selected_in_hand:
+		hand_node.remove_child(card)
+		card.queue_free()
 func _on_discard_pressed() -> void:
 	pass
 func setup_game() -> void:
@@ -53,24 +61,6 @@ func setup_game() -> void:
 	#
 	#deck.shuffle()
 	
-	var test_ids:Array[Constants.CardID] = [
-		Constants.CardID.c2,
-		Constants.CardID.c3,
-		Constants.CardID.dog,
-		Constants.CardID.nine_to_five,
-		Constants.CardID.a4,
-		Constants.CardID.k4,
-		Constants.CardID.c4,
-		Constants.CardID.c5,
-		Constants.CardID.c6
-	]
-	test_ids.shuffle()
-	for id:Constants.CardID in test_ids:
-		var card:Card = card_tscn.instantiate()
-		card.id = id
-		#hand.push_back(card)
-
-	find_hand_type(selected_in_hand)
 
 var tween:Tween
 var animation_tick:int = 0

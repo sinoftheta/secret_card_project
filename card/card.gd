@@ -53,23 +53,28 @@ func _to_string() -> String:
 
 func hand_anchor_position() -> float:
 	var ncards:float = float(get_parent().get_child_count())
-	return (float(get_index()) + 0.5 - ncards * 0.5) / ncards * HAND_WIDTH
+	var center:float = ncards*0.5
+	#return (float(get_index()) + 0.5 - ncards * 0.5) / ncards * HAND_WIDTH
+	#return ((float(get_index()) + 0.5)/ncards - center) * HAND_WIDTH
+	return (((float(get_index()) + 0.5)/ncards) - 0.5) * HAND_WIDTH * global_scale.x
 	
+	# p = (((float(get_index()) + 0.5)/ncards) - 0.5) * HAND_WIDTH
+	# p / HAND_WIDTH =      (((float(get_index()) + 0.5)/ncards) - 0.5)
+	# p / HAND_WIDTH + 0.5 = ((float(get_index()) + 0.5)/ncards)
+	# ncards * (p / HAND_WIDTH + 0.5) = (float(get_index()) + 0.5)
+	# ncards * (p / HAND_WIDTH + 0.5) - 0.5 = float(get_index())
 	
 ## moving to left causes an index change instantly
 ## moving to the right causes an index change too late
 ## I should probably be using roundi instead of int idfk
 ## also needs to scale based off of the hand node scale
-
 func hand_anchor_position_inverse() -> int:
 	var ncards:float = float(get_parent().get_child_count())
+	var center:float = ncards*0.5
 	
 	var p:float =   get_parent().to_local(get_global_mouse_position()).x\
-	#var p:float =   get_global_mouse_position().x\
-					
-				   + (%Interaction.size * 0.5 - drag_point).x * global_scale.x
-				
-	return int(p/HAND_WIDTH * ncards + ncards * 0.5 - 0.5)
+				   + (%Interaction.size * 0.5 - drag_point).x #* global_scale.x
+	return roundi(ncards * (p / HAND_WIDTH / global_scale.x + 0.5) - 0.5)
 	
 #func _draw() -> void:
 	#draw_circle(Vector2(0, 56), 5, (%Interaction as ColorRect).color)

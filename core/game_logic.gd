@@ -10,7 +10,10 @@ var deck:Array[Card]
 var discard:Array[Card]
 var trash:Array[Card]
 
-var hand:Array[Card]
+var hand_node:Node2D
+var selected_in_hand:Array[Card]:
+	get():
+		return []
 
 var actions:int
 var round:int
@@ -18,12 +21,24 @@ var score_threshold:float
 var money:int
 
 func _ready() -> void:
+	SignalBus.play_pressed.connect(_on_play_pressed)
+	SignalBus.cut_pressed.connect(_on_cut_pressed)
+	SignalBus.discard_pressed.connect(_on_discard_pressed)
+func _on_play_pressed() -> void:
+	pass
+func _on_cut_pressed() -> void:
+	pass
+func _on_discard_pressed() -> void:
 	pass
 func setup_game() -> void:
 	discard.clear()
 	deck.clear()
 	trash.clear()
-	hand.clear()
+	while hand_node.get_child_count() > 0:
+		var card:Card = hand_node.get_child(0)
+		hand_node.remove_child(card)
+		card.queue_free()
+	#hand.clear()
 	actions = 4
 	round = 0
 	
@@ -50,9 +65,9 @@ func setup_game() -> void:
 	for id:Constants.CardID in test_ids:
 		var card:Card = card_tscn.instantiate()
 		card.id = id
-		hand.push_back(card)
+		#hand.push_back(card)
 
-	find_hand_type(hand)
+	find_hand_type(selected_in_hand)
 
 var tween:Tween
 var animation_tick:int = 0

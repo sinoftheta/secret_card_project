@@ -1,7 +1,7 @@
 extends Node
 
 enum Menu {
-	gameplay,
+	gameplay, 
 	deck_view,
 	shop,
 	between_rounds,

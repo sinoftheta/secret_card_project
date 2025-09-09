@@ -1,4 +1,6 @@
 extends Control
+var card_tscn = preload("res://card/card.tscn")
+const SEARCH_FAIL_MSG:String = "no matching cards!"
 
 func _ready() -> void:
 	apply_card_filters()
@@ -54,16 +56,23 @@ func apply_card_filters() -> void:
 
 	
 	if (%SpawnCard as OptionButton).item_count == 0:
-		(%SpawnCard as OptionButton).add_item("no matching cards!")
+		(%SpawnCard as OptionButton).add_item(SEARCH_FAIL_MSG)
 		(%SpawnCard as OptionButton).set_item_disabled(0,true)
 
 func _on_add_to_hand_pressed() -> void:
-	pass # Replace with function body.
+	if (%SpawnCard as OptionButton).get_item_text((%SpawnCard as OptionButton).selected) == SEARCH_FAIL_MSG:
+		return
+	var card:Card = card_tscn.instantiate()
+	card.id = (%SpawnCard as OptionButton).get_item_id((%SpawnCard as OptionButton).selected)
+	GameLogic.hand_node.add_child(card)
 
 
 func _on_add_to_deck_pressed() -> void:
-	pass # Replace with function body.
-
+	if (%SpawnCard as OptionButton).get_item_text((%SpawnCard as OptionButton).selected) == SEARCH_FAIL_MSG:
+		return
+	var card:Card = card_tscn.instantiate()
+	card.id = (%SpawnCard as OptionButton).get_item_id((%SpawnCard as OptionButton).selected)
+	GameLogic.deck.push_back(card)
 
 func _on_clear_rank_filters_pressed() -> void:
 	for checkbox:CheckBox in %RankFilters.get_children():

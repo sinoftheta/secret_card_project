@@ -6,6 +6,10 @@ const SELECT_THRESHOLD:int = 10 ## this will go in options
 const HAND_WIDTH:float = 400
 
 const MAX_ANGLE:float = deg_to_rad(17)
+const CURVE_HEIGHT:float = 60
+
+const SPEED_LIMIT:float = 1000
+const ACCELERATION:float = 16
 #region Game Logic
 var id:Constants.CardID:
 	set(value):
@@ -56,11 +60,15 @@ func _process(delta: float) -> void:
 	if dragged:
 		(%Render as Node2D).z_index = get_parent().get_child_count()
 		## lerp render to mouse
+		 
+		#var next_position:Vector2 = lerp(
 		(%Render as Node2D).position = lerp(
 			(%Render as Node2D).position, 
 			get_global_mouse_position() + (%Interaction.size * 0.5 - drag_point) * global_scale.x,
-			minf(delta * 16.0,1.0)
+			minf(delta * ACCELERATION,1.0)
 		)
+		#(%Render as Node2D).position += (next_position - (%Render as Node2D).position).limit_length(delta * SPEED_LIMIT)
+		
 		
 		#(%Render as Node2D).rotation = lerp
 		
@@ -81,12 +89,15 @@ func _process(delta: float) -> void:
 			selected_offset = Vector2(0,-60) * global_scale.x
 		else:
 			selected_offset = Vector2(0,0)
-		var curve_offset:Vector2 = -p * p * Vector2(0,-60)
-		(%Render as Node2D).position = lerp(
+		var curve_offset:Vector2 = -p * p * Vector2(0,-CURVE_HEIGHT)
+		
+		var next_position:Vector2 = lerp(
 			(%Render as Node2D).position, 
 			global_position + selected_offset + curve_offset, 
-			minf(delta * 16.0,1.0)
+			minf(delta * ACCELERATION,1.0)
 		)
+		(%Render as Node2D).position += (next_position - (%Render as Node2D).position).limit_length(delta * SPEED_LIMIT)
+		
 	(%Render as Node2D).rotation = lerp(
 		(%Render as Node2D).rotation,
 		angle,

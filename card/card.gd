@@ -54,8 +54,6 @@ func _to_string() -> String:
 func hand_anchor_position() -> float:
 	var ncards:float = float(get_parent().get_child_count())
 	var center:float = ncards*0.5
-	#return (float(get_index()) + 0.5 - ncards * 0.5) / ncards * HAND_WIDTH
-	#return ((float(get_index()) + 0.5)/ncards - center) * HAND_WIDTH
 	return (((float(get_index()) + 0.5)/ncards) - 0.5) * HAND_WIDTH * global_scale.x
 	
 	# p = (((float(get_index()) + 0.5)/ncards) - 0.5) * HAND_WIDTH
@@ -63,17 +61,11 @@ func hand_anchor_position() -> float:
 	# p / HAND_WIDTH + 0.5 = ((float(get_index()) + 0.5)/ncards)
 	# ncards * (p / HAND_WIDTH + 0.5) = (float(get_index()) + 0.5)
 	# ncards * (p / HAND_WIDTH + 0.5) - 0.5 = float(get_index())
-	
-## moving to left causes an index change instantly
-## moving to the right causes an index change too late
-## I should probably be using roundi instead of int idfk
-## also needs to scale based off of the hand node scale
 func hand_anchor_position_inverse() -> int:
 	var ncards:float = float(get_parent().get_child_count())
 	var center:float = ncards*0.5
-	
 	var p:float =   get_parent().to_local(get_global_mouse_position()).x\
-				   + (%Interaction.size * 0.5 - drag_point).x #* global_scale.x
+				   + (%Interaction.size * 0.5 - drag_point).x
 	return roundi(ncards * (p / HAND_WIDTH / global_scale.x + 0.5) - 0.5)
 	
 #func _draw() -> void:

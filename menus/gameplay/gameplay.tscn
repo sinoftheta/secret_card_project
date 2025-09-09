@@ -9,28 +9,26 @@ script = ExtResource("1_a7ncl")
 
 [node name="Hand" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(44, -33)
-scale = Vector2(0.5, 0.5)
 
 [node name="Cut" type="Button" parent="."]
 offset_left = -113.0
-offset_top = 64.0
+offset_top = 72.0
 offset_right = -45.0
-offset_bottom = 95.0
+offset_bottom = 103.0
 text = "Cut"
 
 [node name="Play" type="Button" parent="."]
 offset_left = -34.0
-offset_top = 64.0
+offset_top = 72.0
 offset_right = 34.0
-offset_bottom = 95.0
+offset_bottom = 103.0
 text = "Play"
 
 [node name="Discard" type="Button" parent="."]
 offset_left = 45.0
-offset_top = 64.0
+offset_top = 72.0
 offset_right = 113.0
-offset_bottom = 95.0
+offset_bottom = 103.0
 text = "Discard"
 
 [connection signal="pressed" from="Cut" to="." method="_on_cut_pressed"]

@@ -24,6 +24,9 @@ func _ready() -> void:
 	SignalBus.play_pressed.connect(_on_play_pressed)
 	SignalBus.cut_pressed.connect(_on_cut_pressed)
 	SignalBus.discard_pressed.connect(_on_discard_pressed)
+	
+	SignalBus.debug_spawn_in_deck.connect(_on_debug_spawn_in_deck)
+	SignalBus.debug_spawn_in_hand.connect(_on_debug_spawn_in_hand)
 func _on_play_pressed() -> void:
 	pass
 func _on_cut_pressed() -> void:
@@ -149,19 +152,46 @@ func find_hand_type(cards:Array[Card]) -> void:
 	## check for "weak" straights
 	## only pick the single longest straight
 	## ignore aces at first
-	var longest_run:int = 0
-	var high_rank_in_longest_run:int = 0
-	var curent_run:int = 0
 	
+	var runs:Array[Array] = []
+	var run_index:int = 0
 	for rank:int in range(2,14):
-		if cards_with_rank[rank].size() > 0:
-			curent_run += 1
-		else:
-			curent_run = 0
+		## check if we need to start a new run
+		if runs.size() == run_index:
+			runs.push_back([])
 		
-		if curent_run >= longest_run:
-			longest_run = curent_run
-			high_rank_in_longest_run = rank
+		if cards_with_rank[rank].size() > 0:
+			runs[-1].push_back(rank)
+		else:
+			run_index += 1
+	runs = runs.filter(func(run:Array) -> bool: return run.size() > 0)
+	print(runs)
+			
+	
+	if cards_with_rank[14].size() == 0:
+		## we have no aces, count straights normally
+		pass
+	elif cards_with_rank[14].size() == 1:
+		## we have one ace, need to test which way of counting it (low vs high)
+		## results in a longer straight
+		pass
+	else:
+		## we have two or more aces, they can both be used in one big straight
+		pass
+	
+	#var longest_run:int = 0
+	#var high_rank_in_longest_run:int = 0
+	#var curent_run:int = 0
+	#
+	#for rank:int in range(2,14):
+		#if cards_with_rank[rank].size() > 0:
+			#curent_run += 1
+		#else:
+			#curent_run = 0
+		#
+		#if curent_run >= longest_run:
+			#longest_run = curent_run
+			#high_rank_in_longest_run = rank
 			
 	## analyze aces low/high
 	
@@ -173,3 +203,16 @@ func find_hand_type(cards:Array[Card]) -> void:
 	for rank:int in cards_with_rank.keys():
 		if cards_with_rank[rank].size() == 5:
 			ranks_with_5_cards.push_back(rank)
+
+
+
+
+
+func _on_debug_spawn_in_deck(id:Constants.CardID) -> void:
+	var card:Card = card_tscn.instantiate()
+	card.id = id
+	deck.push_back(card)
+func _on_debug_spawn_in_hand(id:Constants.CardID) -> void:
+	var card:Card = card_tscn.instantiate()
+	card.id = id
+	hand_node.add_child(card)

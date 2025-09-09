@@ -1,16 +1,15 @@
 extends Control
-var card_tscn = preload("res://card/card.tscn")
-const SEARCH_FAIL_MSG:String = "no matching cards!"
+var card_spawn_tscn:PackedScene = preload("res://debug/card_spawn.tscn")
 
 func _ready() -> void:
+	for id:Constants.CardID in Constants.card_data.keys():
+		var card_spawn:CardSpawn = card_spawn_tscn.instantiate()
+		card_spawn.id = id
+		%CardSpawns.add_child(card_spawn)
 	apply_card_filters()
 func apply_card_filters() -> void:
 	## no checkboxes selected = no filters
 	## ace checkbox selected = only search for aces
-	
-	#var any_suit_filters:bool = %SuitFilters.get_children().any(are_checked)
-	#var any_rank_filters:bool = %RankFilters.get_children().any(are_checked)
-	(%SpawnCard as OptionButton).clear()
 	
 	var suit_filters:Array[Constants.Suit] = []
 	for checkbox:CheckBox in %SuitFilters.get_children():
@@ -24,7 +23,8 @@ func apply_card_filters() -> void:
 	
 	
 	
-	for id:Constants.CardID in Constants.card_data.keys():
+	for card_spawn:CardSpawn in %CardSpawns.get_children():
+		var id:Constants.CardID = card_spawn.id
 		var has_all_ranks:bool = true
 		var has_all_suits:bool = true
 		
@@ -39,40 +39,16 @@ func apply_card_filters() -> void:
 				break
 		
 		if rank_filters.size() > 0 and suit_filters.size() > 0:
-			if has_all_ranks and has_all_suits:
-				(%SpawnCard as OptionButton).add_item(Constants.card_data[id].title,id)
+			card_spawn.visible = has_all_ranks and has_all_suits
 		
 		elif rank_filters.size() > 0:
-			if has_all_ranks:
-				(%SpawnCard as OptionButton).add_item(Constants.card_data[id].title,id)
+			card_spawn.visible = has_all_ranks
 		
 		elif suit_filters.size() > 0:
-			if has_all_suits:
-				(%SpawnCard as OptionButton).add_item(Constants.card_data[id].title,id)
+			card_spawn.visible = has_all_suits
 		
 		else:
-			## no filters applied, add the id
-			(%SpawnCard as OptionButton).add_item(Constants.card_data[id].title,id)
-
-	
-	if (%SpawnCard as OptionButton).item_count == 0:
-		(%SpawnCard as OptionButton).add_item(SEARCH_FAIL_MSG)
-		(%SpawnCard as OptionButton).set_item_disabled(0,true)
-
-func _on_add_to_hand_pressed() -> void:
-	if (%SpawnCard as OptionButton).get_item_text((%SpawnCard as OptionButton).selected) == SEARCH_FAIL_MSG:
-		return
-	var card:Card = card_tscn.instantiate()
-	card.id = (%SpawnCard as OptionButton).get_item_id((%SpawnCard as OptionButton).selected)
-	GameLogic.hand_node.add_child(card)
-
-
-func _on_add_to_deck_pressed() -> void:
-	if (%SpawnCard as OptionButton).get_item_text((%SpawnCard as OptionButton).selected) == SEARCH_FAIL_MSG:
-		return
-	var card:Card = card_tscn.instantiate()
-	card.id = (%SpawnCard as OptionButton).get_item_id((%SpawnCard as OptionButton).selected)
-	GameLogic.deck.push_back(card)
+			card_spawn.visible = true
 
 func _on_clear_rank_filters_pressed() -> void:
 	for checkbox:CheckBox in %RankFilters.get_children():

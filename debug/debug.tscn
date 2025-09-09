@@ -131,19 +131,13 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Clear"
 
-[node name="AddToDeck" type="Button" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(260, 581)
 layout_mode = 2
-text = "add to deck"
 
-[node name="AddToHand" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "add to hand"
-
-[node name="SpawnCard" type="OptionButton" parent="VBoxContainer"]
+[node name="CardSpawns" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-item_count = 1
-popup/item_0/id = 0
 
 [connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/2" to="." method="_on_filter_option_toggled"]
 [connection signal="toggled" from="VBoxContainer/Filters/RankFilterStuff/RankFilters/3" to="." method="_on_filter_option_toggled"]
@@ -164,5 +158,3 @@ popup/item_0/id = 0
 [connection signal="toggled" from="VBoxContainer/Filters/SuitFilterStuff/SuitFilters/Spades" to="." method="_on_filter_option_toggled"]
 [connection signal="toggled" from="VBoxContainer/Filters/SuitFilterStuff/SuitFilters/Diamonds" to="." method="_on_filter_option_toggled"]
 [connection signal="pressed" from="VBoxContainer/Filters/SuitFilterStuff/ClearSuitFilters" to="." method="_on_clear_suit_filters_pressed"]
-[connection signal="pressed" from="VBoxContainer/AddToDeck" to="." method="_on_add_to_deck_pressed"]
-[connection signal="pressed" from="VBoxContainer/AddToHand" to="." method="_on_add_to_hand_pressed"]

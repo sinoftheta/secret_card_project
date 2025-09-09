@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://1g1wgxllstqt"]
+[gd_scene load_steps=4 format=3 uid="uid://1g1wgxllstqt"]
 
 [ext_resource type="Script" uid="uid://cob5bo280e4q4" path="res://card/card.gd" id="1_fjcud"]
+[ext_resource type="Shader" uid="uid://co1uxwdqmnio6" path="res://card/card_shadow.gdshader" id="2_trrkg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ply2h"]
+shader = ExtResource("2_trrkg")
+shader_parameter/shadow_color = Vector4(0, 0, 0, 0.2)
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_fjcud")
@@ -8,6 +13,14 @@ script = ExtResource("1_fjcud")
 [node name="Render" type="Node2D" parent="."]
 unique_name_in_owner = true
 top_level = true
+
+[node name="Shadow" type="Sprite2D" parent="Render"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ply2h")
+position = Vector2(-1, 6)
+scale = Vector2(1.05, 1.05)
+hframes = 13
+vframes = 4
 
 [node name="Sprite" type="Sprite2D" parent="Render"]
 unique_name_in_owner = true

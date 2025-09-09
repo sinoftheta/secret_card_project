@@ -17,6 +17,9 @@ var id:Constants.CardID:
 		if is_node_ready():
 			(%Sprite as Sprite2D).texture = data.texture
 			(%Sprite as Sprite2D).frame_coords = data.texture_coord
+			
+			(%Shadow as Sprite2D).texture = data.texture
+			(%Shadow as Sprite2D).frame_coords = data.texture_coord
 ## other card state goes here
 var disabled:bool
 var selected:bool
@@ -47,14 +50,33 @@ func _to_string() -> String:
 		
 #endregion
 
+
+func hand_anchor_position() -> float:
+	var ncards:float = float(get_parent().get_child_count())
+	return (float(get_index()) + 0.5 - ncards * 0.5) / ncards * HAND_WIDTH
+	
+	
+## moving to left causes an index change instantly
+## moving to the right causes an index change too late
+## I should probably be using roundi instead of int idfk
+## also needs to scale based off of the hand node scale
+
+func hand_anchor_position_inverse() -> int:
+	var ncards:float = float(get_parent().get_child_count())
+	
+	var p:float =   get_parent().to_local(get_global_mouse_position()).x\
+	#var p:float =   get_global_mouse_position().x\
+					
+				   + (%Interaction.size * 0.5 - drag_point).x * global_scale.x
+				
+	return int(p/HAND_WIDTH * ncards + ncards * 0.5 - 0.5)
+	
 #func _draw() -> void:
-#	draw_circle(Vector2(0, 56), 5, (%Interaction as ColorRect).color)
+	#draw_circle(Vector2(0, 56), 5, (%Interaction as ColorRect).color)
 func _process(delta: float) -> void:
 	if not is_node_ready(): return
-	var p:float = (float(get_index()) + 0.5 - float(get_parent().get_child_count()) * 0.5) / float(get_parent().get_child_count())
 	
-	position.x = float(get_index()) / float(get_parent().get_child_count()) * HAND_WIDTH
-	var angle:float = p * MAX_ANGLE
+	position.x = hand_anchor_position()
 	
 	## NOTE: render.top_level == true
 	if dragged:
@@ -75,7 +97,7 @@ func _process(delta: float) -> void:
 		## check if we need to re-arrange the card orders
 		var hovered_index:int = clampi(
 			## this is the INVERSE of position.x, defined earlier in _process()
-			int(get_parent().to_local(get_global_mouse_position()).x / HAND_WIDTH * float(get_parent().get_child_count()) + 0.5),
+			hand_anchor_position_inverse(),
 			0,
 			get_parent().get_child_count() - 1
 		)
@@ -89,20 +111,13 @@ func _process(delta: float) -> void:
 			selected_offset = Vector2(0,-60) * global_scale.x
 		else:
 			selected_offset = Vector2(0,0)
-		var curve_offset:Vector2 = -p * p * Vector2(0,-CURVE_HEIGHT)
 		
 		var next_position:Vector2 = lerp(
 			(%Render as Node2D).position, 
-			global_position + selected_offset + curve_offset, 
+			global_position + selected_offset,
 			minf(delta * ACCELERATION,1.0)
 		)
 		(%Render as Node2D).position += (next_position - (%Render as Node2D).position).limit_length(delta * SPEED_LIMIT)
-		
-	(%Render as Node2D).rotation = lerp(
-		(%Render as Node2D).rotation,
-		angle,
-		minf(delta * 16.0,1.0)
-	)
 	
 var dragged:bool
 var drag_point:Vector2
@@ -136,6 +151,10 @@ func _on_interaction_gui_input(event: InputEvent) -> void:
 func _on_tree_entered() -> void:
 	(%Sprite as Sprite2D).texture = data.texture
 	(%Sprite as Sprite2D).frame_coords = data.texture_coord
+	
+	(%Shadow as Sprite2D).texture = data.texture
+	(%Shadow as Sprite2D).frame_coords = data.texture_coord
+	
 	
 	## NOTE: render.top_level == true
 	(%Render as Node2D).scale = global_scale

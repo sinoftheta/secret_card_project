@@ -91,6 +91,9 @@ func _on_enter_round() -> void:
 	
 	
 func find_hand_type(cards:Array[Card]) -> void:
+	if cards.size() == 0:
+		print("no cards submitted!")
+		return
 	
 	cards.sort_custom(func (a:Card, b:Card) -> bool: return a.ranks[0] )
 	
@@ -111,6 +114,8 @@ func find_hand_type(cards:Array[Card]) -> void:
 		for suit:Constants.Suit in card.suits:
 			cards_with_suit[suit].push_back(card)
 			
+			
+	#print("cards_with_rank: ", cards_with_rank)
 	## check for each hand type
 	
 	
@@ -124,19 +129,19 @@ func find_hand_type(cards:Array[Card]) -> void:
 			print("hand contains a ", Constants.Suit.keys()[suit]," flush!")
 			flush_count += 1
 	
-	if cards.size() == 5:
-		## check for a "true" straight
-		## check for the existance of each straight
-		## we don't have the luxury of sorting the cards before checking for the straight
-		## if a straight exists, there must be an ordering of cards that makes that straight
-		## we check all 5! orderings
-		for ordered_straight_ranks:Array in Util.five_straights:
-			for perm:Array in Util.perms5:
-				for i:int in range(5):
-					if not cards[perm[i]].ranks.has(ordered_straight_ranks[i]):
-						break
-					if i == 4:
-						print("straight found!")
+	#if cards.size() == 5:
+		### check for a "true" straight
+		### check for the existance of each straight
+		### we don't have the luxury of sorting the cards before checking for the straight
+		### if a straight exists, there must be an ordering of cards that makes that straight
+		### we check all 5! orderings
+		#for ordered_straight_ranks:Array in Util.five_straights:
+			#for perm:Array in Util.perms5:
+				#for i:int in range(5):
+					#if not cards[perm[i]].ranks.has(ordered_straight_ranks[i]):
+						#break
+					#if i == 4:
+						#print("true straight detected")
 	
 	
 	## check for "weak" straights
@@ -155,46 +160,90 @@ func find_hand_type(cards:Array[Card]) -> void:
 		else:
 			run_index += 1
 	runs = runs.filter(func(run:Array) -> bool: return run.size() > 0)
-	print(runs)
+	runs.reverse() ## we do this because higher runs must be counted first
+	print("runs: ", runs)
 			
-	
+	var detected_straight:Array = []
 	if cards_with_rank[14].size() == 0:
 		## we have no aces, count straights normally
-		pass
+		for run:Array in runs:
+			if run.size() >= 5:
+				detected_straight = run
+				break
 	elif cards_with_rank[14].size() == 1:
 		## we have one ace, need to test which way of counting it (low vs high)
 		## results in a longer straight
+		
+		## check if we have a run with a 2 in front
+		
+		## check if we have a run with a 13 in back
 		pass
 	else:
 		## we have two or more aces, they can both be used in one big straight
 		pass
-	
-	#var longest_run:int = 0
-	#var high_rank_in_longest_run:int = 0
-	#var curent_run:int = 0
-	#
-	#for rank:int in range(2,14):
-		#if cards_with_rank[rank].size() > 0:
-			#curent_run += 1
-		#else:
-			#curent_run = 0
-		#
-		#if curent_run >= longest_run:
-			#longest_run = curent_run
-			#high_rank_in_longest_run = rank
-			
-	## analyze aces low/high
-	
+		
+	if detected_straight.size() > 0:
+		print("straight: ", detected_straight)
 	
 	
 
-	## five of a kind
-	var ranks_with_5_cards:Array[int]
+	## NOTE:
+	## the highest rank will be located at the front
+	## cus cards_with_rank has a reverse sorting
+	var ranks_with_5_count:Array[int]
+	var ranks_with_4_count:Array[int]
+	var ranks_with_3_count:Array[int]
+	var ranks_with_2_count:Array[int]
+	var ranks_with_1_count:Array[int]
 	for rank:int in cards_with_rank.keys():
-		if cards_with_rank[rank].size() == 5:
-			ranks_with_5_cards.push_back(rank)
-
-
+		match cards_with_rank[rank].size():
+			5: ranks_with_5_count.push_back(rank)
+			4: ranks_with_4_count.push_back(rank)
+			3: ranks_with_3_count.push_back(rank)
+			2: ranks_with_2_count.push_back(rank)
+			1: ranks_with_1_count.push_back(rank)
+			_:pass
+			
+	print("ranks with 5 count: ", ranks_with_5_count)
+	print("ranks with 4 count: ", ranks_with_4_count)
+	print("ranks with 3 count: ", ranks_with_3_count)
+	print("ranks with 2 count: ", ranks_with_2_count)
+	print("ranks with 1 count: ", ranks_with_1_count)
+			
+	## check for hands containing 5 of a kind
+	if ranks_with_5_count.size() >= 2:
+		print("two quintets: ", ranks_with_5_count[0], "s and ",ranks_with_5_count[1], "s")
+		## uhh fuck it, stuff more than double I'll add in The Future. I don't think they add much rn tbh
+		## this is already pretty close to the max for a demo
+	elif ranks_with_5_count.size() == 1:
+		if ranks_with_4_count.size() > 0:
+			print("full mansion: ", ranks_with_5_count[0], "s full of ", ranks_with_4_count[0], "s")
+		else:
+			print("five of a kind: ", ranks_with_5_count[0], "s")
+	
+	elif ranks_with_4_count.size() >= 2:
+		print("two quartets: ", ranks_with_4_count[0],"s and ", ranks_with_4_count[1], "s")
+	elif ranks_with_4_count.size() == 1:
+		if ranks_with_3_count.size() > 0:
+			print("full manor: ", ranks_with_4_count[0], "s full of ", ranks_with_3_count[0], "s")
+		else:
+			print("four of a kind: ", ranks_with_4_count[0], "s")
+	
+	
+	elif ranks_with_3_count.size() >= 2:
+		print("two triplets: ", ranks_with_3_count[0], "s and ", ranks_with_3_count[1], "s")
+	elif ranks_with_3_count.size() == 1:
+		if ranks_with_2_count.size() > 0:
+			print("full manor: ", ranks_with_3_count[0], "s full of ", ranks_with_2_count[0], "s")
+		else:
+			print("three of a kind: ", ranks_with_3_count[0], "s")
+	
+	elif ranks_with_2_count.size() >= 2:
+		print("two pair: ", ranks_with_2_count[0], "s and ", ranks_with_2_count[1], "s")
+	elif ranks_with_2_count.size() == 1:
+		print("pair of ", ranks_with_2_count[0], "s")
+	else:
+		print("high card: ", ranks_with_1_count[0])
 
 
 

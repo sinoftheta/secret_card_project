@@ -23,6 +23,61 @@ enum ShopRarity {
 	rare,
 }
 
+enum HandType {
+	high_card,
+	pair,
+	two_pair,
+	three_of_a_kind,
+	straight,
+	flush,
+	full_house,
+	straight_flush,
+	
+	full_manor, ## AAAA BBB
+	full_mansion, ## AAAAA BBBB
+	
+	two_triads, ## AAA BBB
+	two_quartets, ## AAAA BBBB
+	two_quintets, ## AAAAA BBBBB
+	
+	flush_house,
+	flush_manor,
+	flush_mansion,
+	
+	flush_triads,
+	flush_quartets,
+	flush_quintets,
+	
+	five_of_a_kind,
+	flush_five,
+	
+	six_straight,
+	seven_straight,
+	eight_straight,
+	nine_straight,
+	deca_straight,
+	mega_straight,
+	giga_straight,
+	ultra_straight,
+	omni_straight,
+	
+	six_straight_flush,
+	seven_straight_flush,
+	eight_straight_flush,
+	nine_straight_flush,
+	deca_straight_flush,
+	mega_straight_flush,
+	giga_straight_flush,
+	ultra_straight_flush,
+	omni_straight_flush,
+	
+	
+	
+	
+	
+	
+}
+
 enum CardID {
 	## standard playing cards
 	c2,c3,c4,c5,c6,c7,c8,c9,ct,cj,cq,ck,ca,

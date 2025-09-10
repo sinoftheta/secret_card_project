@@ -31,6 +31,7 @@ func _init(
 	ranks.sort()
 	var rank_counts:Dictionary[int,int] = {}
 	for rank:int in ranks:
+		assert(2 <= rank and rank <= 14)
 		if not rank_counts.has(rank):
 			rank_counts[rank] = 1
 		else:
@@ -44,6 +45,7 @@ func _init(
 	suits.sort()
 	var suit_counts:Dictionary[int,int] = {}
 	for suit:int in suits:
+		assert(Constants.Suit.values().has(suit))
 		if not suit_counts.has(suit):
 			suit_counts[suit] = 1
 		else:
